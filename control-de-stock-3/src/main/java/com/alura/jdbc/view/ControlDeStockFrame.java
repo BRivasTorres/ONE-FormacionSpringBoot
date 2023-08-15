@@ -200,13 +200,19 @@ public class ControlDeStockFrame extends JFrame {
 
         Optional.ofNullable(modelo.getValueAt(tabla.getSelectedRow(), tabla.getSelectedColumn()))
                 .ifPresentOrElse(fila -> {
-                    Integer id = (Integer) modelo.getValueAt(tabla.getSelectedRow(), 0);
+                    Integer id = Integer.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 0).toString());
 
-                    this.productoController.eliminar(id);
+                    int cantidadEliminada;
+                    
+                    try {
+						cantidadEliminada = this.productoController.eliminar(id);
+					} catch (SQLException e) {
+						throw new RuntimeException(e);
+					}
 
                     modelo.removeRow(tabla.getSelectedRow());
 
-                    JOptionPane.showMessageDialog(this, "Item eliminado con éxito!");
+                    JOptionPane.showMessageDialog(this, cantidadEliminada + " Item eliminado con éxito!");
                 }, () -> JOptionPane.showMessageDialog(this, "Por favor, elije un item"));
     }
 
@@ -215,7 +221,7 @@ public class ControlDeStockFrame extends JFrame {
     		var productos = this.productoController.listar();
     		
             try {
-                 productos.forEach(producto -> modelo.addRow(new Object[] { producto.get("D"), producto.get("NOMBRE"),
+                 productos.forEach(producto -> modelo.addRow(new Object[] { producto.get("ID"), producto.get("NOMBRE"),
                 producto.get("DESCRIPCION"), producto.get("CANTIDAD") }));
             } catch (Exception e) {
                 throw e;
@@ -241,7 +247,7 @@ public class ControlDeStockFrame extends JFrame {
             return;
         }
 
-        var producto = new HashMap<String, String>();  
+        var producto = new HashMap<String, String>();
         producto.put("NOMBRE", textoNombre.getText());
         producto.put("DESCRIPCION", textoDescripcion.getText());
         producto.put("CANTIDAD", String.valueOf(cantidadInt));
