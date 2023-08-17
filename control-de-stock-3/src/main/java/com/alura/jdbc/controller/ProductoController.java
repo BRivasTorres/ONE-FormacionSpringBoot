@@ -75,13 +75,20 @@ public class ProductoController {
 		con.setAutoCommit(false);
 		PreparedStatement statement = con.prepareStatement("INSERT INTO PRODUCTO(nombre, descripcion, cantidad)" + "VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 		
-		do {
-			int cantidadParaGuardad = Math.min(cantidad, maximaCantidad);
-			ejecutaRegistro(descripcion, nombre, cantidad, statement);
+		try {
+			do {
+				int cantidadParaGuardad = Math.min(cantidad, maximaCantidad);
+				ejecutaRegistro(descripcion, nombre, cantidad, statement);
+				
+				cantidad -= maximaCantidad;
+			} while(cantidad > 0);
 			
-			cantidad -= maximaCantidad;
-		} while(cantidad > 0);
+			con.commit();
+		} catch(Exception e) {
+			con.rollback();
+		}
 		
+		statement.close();
 		con.close();
 	}
 
