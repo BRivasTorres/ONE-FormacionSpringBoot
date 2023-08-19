@@ -12,6 +12,8 @@ import java.util.Map;
 
 import com.alura.jdbc.factory.ConnectionFactory;
 import com.alura.jdbc.modelo.Producto;
+import com.alura.jdbc.persistencia.PersistenciaProducto;
+import com.alura.jdbc.persistencia.ProductoDAO;
 
 public class ProductoController {
 
@@ -70,25 +72,8 @@ public class ProductoController {
 	}
 
     public void guardar(Producto producto) throws SQLException {
-    	String nombre = producto.getNombre();
-    	String descripcion = producto.getDescripcion();
-    	Integer cantidad = producto.getCantidad();
-    	Integer maximaCantidad = 50;
-    	
-    	try(Connection con = new ConnectionFactory().recuperaConexion();) {
- 
-    		con.setAutoCommit(false);
-    		try(PreparedStatement statement = con.prepareStatement("INSERT INTO PRODUCTO(nombre, descripcion, cantidad)" + "VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);) {
-        		do {
-        			int cantidadParaGuardad = Math.min(cantidad, maximaCantidad);
-        			ejecutaRegistro(producto, statement);	
-        			cantidad -= maximaCantidad;
-        		} while(cantidad > 0);	
-        		con.commit();
-        	} catch(Exception e) {
-        		con.rollback();
-    		}
-    	}
+    	ProductoDAO persistenciaProducto = new ProductoDAO(new ConnectionFactory().recuperaConexion());
+    	persistenciaProducto.guardar(producto);
 	}
 
 	private void ejecutaRegistro(Producto producto, PreparedStatement statement)
