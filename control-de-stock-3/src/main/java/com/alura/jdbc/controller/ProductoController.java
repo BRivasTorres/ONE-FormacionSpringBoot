@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.alura.jdbc.factory.ConnectionFactory;
+import com.alura.jdbc.modelo.Producto;
 
 public class ProductoController {
 
@@ -68,10 +69,10 @@ public class ProductoController {
 		}
 	}
 
-    public void guardar(Map<String, String> producto) throws SQLException {
-    	String descripcion = producto.get("DESCRIPCION");
-    	String nombre = producto.get("NOMBRE");
-    	Integer cantidad = Integer.valueOf(producto.get("CANTIDAD"));
+    public void guardar(Producto producto) throws SQLException {
+    	String nombre = producto.getNombre();
+    	String descripcion = producto.getDescripcion();
+    	Integer cantidad = producto.getCantidad();
     	Integer maximaCantidad = 50;
     	
     	try(Connection con = new ConnectionFactory().recuperaConexion();) {
@@ -80,7 +81,7 @@ public class ProductoController {
     		try(PreparedStatement statement = con.prepareStatement("INSERT INTO PRODUCTO(nombre, descripcion, cantidad)" + "VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);) {
         		do {
         			int cantidadParaGuardad = Math.min(cantidad, maximaCantidad);
-        			ejecutaRegistro(descripcion, nombre, cantidad, statement);	
+        			ejecutaRegistro(producto, statement);	
         			cantidad -= maximaCantidad;
         		} while(cantidad > 0);	
         		con.commit();
@@ -90,17 +91,18 @@ public class ProductoController {
     	}
 	}
 
-	private void ejecutaRegistro(String descripcion, String nombre, Integer cantidad, PreparedStatement statement)
+	private void ejecutaRegistro(Producto producto, PreparedStatement statement)
 			throws SQLException {
-		statement.setString(1, nombre);
-		statement.setString(2, descripcion);
-		statement.setInt(3, cantidad);
+		statement.setString(1, producto.getNombre());
+		statement.setString(2, producto.getDescripcion());
+		statement.setInt(3, producto.getCantidad());
 						
 		statement.execute();
 		
 		try(ResultSet resultSet = statement.getGeneratedKeys();) {
 			while(resultSet.next()) {
-				System.out.println(resultSet.getInt(1));
+				producto.setId(resultSet.getInt(1));
+				System.out.println(String.format("Fue insertado el producto ", producto));
 			}
 		}
 	}
