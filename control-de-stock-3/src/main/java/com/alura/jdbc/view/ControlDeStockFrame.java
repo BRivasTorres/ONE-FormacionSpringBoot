@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.alura.jdbc.controller.CategoriaController;
 import com.alura.jdbc.controller.ProductoController;
+import com.alura.jdbc.modelo.Categoria;
 import com.alura.jdbc.modelo.Producto;
 
 public class ControlDeStockFrame extends JFrame {
@@ -27,7 +28,7 @@ public class ControlDeStockFrame extends JFrame {
 
     private JLabel labelNombre, labelDescripcion, labelCantidad, labelCategoria;
     private JTextField textoNombre, textoDescripcion, textoCantidad;
-    private JComboBox<Object> comboCategoria;
+    private JComboBox<Categoria> comboCategoria;
     private JButton botonGuardar, botonModificar, botonLimpiar, botonEliminar, botonReporte;
     private JTable tabla;
     private DefaultTableModel modelo;
