@@ -1,4 +1,5 @@
 package com.alura.jdbc.controller;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.alura.jdbc.dao.PersistenciaProducto;
+//import com.alura.jdbc.dao.PersistenciaProducto;
 import com.alura.jdbc.dao.ProductoDAO;
 import com.alura.jdbc.factory.ConnectionFactory;
 import com.alura.jdbc.modelo.Producto;
@@ -51,7 +52,7 @@ public class ProductoController {
 			}
 		}
 	}
-
+	
 	public List<Producto> listar() {
 		return productoDAO.listar();
 	}
