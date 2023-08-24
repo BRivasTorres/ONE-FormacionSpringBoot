@@ -7,17 +7,16 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import com.latam.alura.latam.dao.ProductoDAO;
+import com.latam.alura.latam.tienda.modelo.Categoria;
 import com.latam.alura.latam.tienda.modelo.Producto;
 import com.latam.alura.latam.utils.JPAUtils;
 
 public class RegistroDeProducto {
 
 	public static void main(String[] args) {
-		Producto celular = new Producto();
-		celular.setNombre("Samsung");
-		celular.setDescription("telefono usado");
-		celular.setPrecio(new BigDecimal("1000"));
-
+		Categoria celulares = new Categoria("CELULARES");
+		
+		Producto celular = new Producto("Samsung", "telefono usado", new BigDecimal("1000"), celulares);
 		
 		EntityManager em = JPAUtils.getEntityManager();
 		
