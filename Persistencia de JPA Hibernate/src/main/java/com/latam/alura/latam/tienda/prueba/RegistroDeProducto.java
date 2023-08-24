@@ -24,9 +24,9 @@ public class RegistroDeProducto {
 		
 		productoDao.guardar(celular);
 		
-		em.getTransaction().begin();
-		
-		em.getTransaction().commit();
+		em.flush();
+		em.clear();
+		em.merge(celulares);
 		em.close();
-	}
+	} 
 }
