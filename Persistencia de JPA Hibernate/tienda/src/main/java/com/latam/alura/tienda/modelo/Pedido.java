@@ -1,46 +1,71 @@
 package com.latam.alura.tienda.modelo;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import antlr.collections.List;
+
 @Entity
-@Table(name="clientes")
+@Table(name="pedidos")
 public class Pedido {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	private String nombre;
-	private String dni;
-	
+	private LocalDate fecha = LocalDate.now();
+	private BigDecimal valorTotal;
 	public Pedido() {}	
 	
-	public Pedido(String nombre, String dni) {
-		super();
-		this.nombre = nombre;
-		this.dni = dni;
+	@ManyToOne 
+	private Cliente cliente;
+	@ManyToMany
+	@JoinTable(name="items_pedido")
+	private List<Producto> productos;
+	
+	
+	public Pedido(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	public Long getId() {
 		return id;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public LocalDate getFecha() {
+		return fecha;
 	}
 
-	public String getDni() {
-		return dni;
+	public void setFecha(LocalDate fecha) {
+		this.fecha = fecha;
 	}
 
-	public void setDni(String dni) {
-		this.dni = dni;
-	}	
+	public BigDecimal getValorTotal() {
+		return valorTotal;
+	}
+
+	public void setValorTotal(BigDecimal valorTotal) {
+		this.valorTotal = valorTotal;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	
 }
