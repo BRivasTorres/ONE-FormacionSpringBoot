@@ -1,4 +1,4 @@
-package com.latam.alura.latam.utils;
+package com.latam.alura.tienda.utils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

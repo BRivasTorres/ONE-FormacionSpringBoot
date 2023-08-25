@@ -1,4 +1,4 @@
-package com.latam.alura.latam.tienda.modelo;
+package com.latam.alura.tienda.modelo;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,27 +7,40 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "categorias")
-public enum Categoria {
+@Table(name="clientes")
+public class Pedido {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY())
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private String nombre;
+	private String dni;
+	
+	public Pedido() {}	
+	
+	public Pedido(String nombre, String dni) {
+		super();
+		this.nombre = nombre;
+		this.dni = dni;
+	}
+
 	public Long getId() {
 		return id;
 	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	private Categoria(String nombre) {
-		this.nombre = nombre;
-	}
+
 	public String getNombre() {
 		return nombre;
 	}
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
+
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}	
 }

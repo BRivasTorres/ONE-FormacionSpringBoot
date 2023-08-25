@@ -28,5 +28,7 @@ public class RegistroDeProducto {
 		em.clear();
 		em.merge(celulares);
 		em.close();
+		em.remove(celulares);
+		em.flush();
 	} 
 }

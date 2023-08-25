@@ -1,11 +1,9 @@
-package com.latam.alura.latam.tienda.modelo;
+package com.latam.alura.tienda.modelo;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,42 +12,46 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="productos")
-public class Producto {
+public class Producto{
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
+	
 	private String nombre;
-	private String description;
+	private String descripcion;
 	private BigDecimal precio;
-	private LocalDate fechaDeRegistro = LocalDate.now();
-	@ManyToOne;
+	private LocalDate fechaDeRegistro= LocalDate.now();
+	
+	@ManyToOne
 	private Categoria categoria;
-	 
-	public Producto(String nombre, String description, BigDecimal precio, Categoria categoria) {
-		super(); 
+
+	
+	public Producto() {
+		
+	}
+	public Producto(String nombre, String descripcion, BigDecimal precio, Categoria categoria) {
 		this.nombre = nombre;
-		this.description = description;
+		this.descripcion = descripcion;
 		this.precio = precio;
 		this.categoria = categoria;
-	}	
-	
+	}
 	public Long getId() {
 		return id;
 	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+
 	public String getNombre() {
 		return nombre;
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getDescription() {
-		return description;
+	public String getDescripcion() {
+		return descripcion;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 	public BigDecimal getPrecio() {
 		return precio;
@@ -57,6 +59,4 @@ public class Producto {
 	public void setPrecio(BigDecimal precio) {
 		this.precio = precio;
 	}
-	
-	
 }
