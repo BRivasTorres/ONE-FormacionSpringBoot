@@ -10,9 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import antlr.collections.List;
+
 
 @Entity
 @Table(name="pedidos")
@@ -28,7 +30,7 @@ public class Pedido {
 	@ManyToOne 
 	private Cliente cliente;
 	
-	?
+	@OneToMany(mappedBy="pedido")
 	private List<ItemsPedidos> items;
 	
 	
