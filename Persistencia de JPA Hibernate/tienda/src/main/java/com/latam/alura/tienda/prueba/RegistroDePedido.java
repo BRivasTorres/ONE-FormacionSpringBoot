@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import javax.persistence.EntityManager;
 
 import com.latam.alura.tienda.dao.CategoriaDao;
+import com.latam.alura.tienda.dao.ClienteDao;
 import com.latam.alura.tienda.dao.ProductoDao;
 import com.latam.alura.tienda.modelo.Categoria;
 import com.latam.alura.tienda.modelo.Cliente;
@@ -21,9 +22,13 @@ public class RegistroDePedido {
 		ProductoDao productoDao = new ProductoDao(em);
 		Producto producto = productoDao.consultaPorId(1l);
 		
+		ClienteDao clienteDao = new ClienteDao(em);
+		
 		Cliente cliente = new Cliente("Juan", "k38323k");
 		Pedido pedido = new Pedido(cliente);
 		pedido.agregarItems(new ItemsPedidos(5, producto, pedido));
+		
+		clienteDao.guardar(cliente);
 	}
 
 	private static void registrarProducto() {

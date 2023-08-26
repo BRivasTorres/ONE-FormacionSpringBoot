@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,7 +32,7 @@ public class Pedido {
 	@ManyToOne 
 	private Cliente cliente;
 	
-	@OneToMany(mappedBy="pedido")
+	@OneToMany(mappedBy="pedido", cascade=CascadeType.ALL)
 	private List<ItemsPedidos> items = new ArrayList<>() ;
 	
 	public Pedido(Cliente cliente) {
