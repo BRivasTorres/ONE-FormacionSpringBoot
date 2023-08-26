@@ -2,6 +2,7 @@ package com.latam.alura.tienda.modelo;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,13 +32,17 @@ public class Pedido {
 	private Cliente cliente;
 	
 	@OneToMany(mappedBy="pedido")
-	private List<ItemsPedidos> items;
-	
+	private List<ItemsPedidos> items = new ArrayList<>() ;
 	
 	public Pedido(Cliente cliente) {
 		this.cliente = cliente;
 	}
 
+	public void agregarItems(ItemsPedidos item) {
+		item.setPedido(this); 
+		this.items.add(item);
+	}
+	
 	public Long getId() {
 		return id;
 	}
