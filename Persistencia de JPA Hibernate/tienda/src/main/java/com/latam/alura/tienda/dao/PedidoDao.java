@@ -6,7 +6,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import com.latam.alura.tienda.modelo.Categoria;
-import com.latam.alura.tienda.modelo.Producto;
+import com.latam.alura.tienda.modelo.Pedido;
+import com.latam.alura.tienda.modelo.Pedido;
 
 public class PedidoDao {
 	
@@ -16,42 +17,31 @@ public class PedidoDao {
 		this.em = em;
 	}
 	
-	public void guardar(Producto producto) {
-		this.em.persist(producto);
+	public void guardar(Pedido Pedido) {
+		this.em.persist(Pedido);
 	}
 	
 	
-	public void actualizar(Producto producto) {
-		this.em.merge(producto);
+	public void actualizar(Pedido Pedido) {
+		this.em.merge(Pedido);
 	}
 	
-	public void remover(Producto producto) {
-		producto=this.em.merge(producto);
-		this.em.remove(producto);
+	public void remover(Pedido Pedido) {
+		Pedido=this.em.merge(Pedido);
+		this.em.remove(Pedido);
 	}
 	
-	public Producto consultaPorId(Long id) {
-		return em.find(Producto.class, id);
+	public Pedido consultaPorId(Long id) {
+		return em.find(Pedido.class, id);
 	}
 	
-	public List<Producto> consultarTodos(){
-		String jqpl= "SELECT P FROM Producto AS P";
-		return em.createQuery(jqpl,Producto.class).getResultList();
+	public List<Pedido> consultarTodos(){
+		String jqpl= "SELECT P FROM Pedido AS P";
+		return em.createQuery(jqpl,Pedido.class).getResultList();
 	}
 	
-	public List<Producto> consultaPorNombre(String nombre){
-		String jpql =" SELECT P FROM Producto AS P WHERE P.nombre=:nombre ";
-		return em.createQuery(jpql,Producto.class).setParameter("nombre", nombre).getResultList();
-	}
-	
-	public List<Producto> consultaPorNombreDeCategoria(String nombre){
-		String jpql="SELECT p FROM Producto AS p WHERE p.categoria.nombre=:nombre";
-		return em.createQuery(jpql,Producto.class).setParameter("nombre", nombre).getResultList();
-	}
-	 
-	public BigDecimal consultarPrecioPorNombreDeProducto(String nombre) {
-		String jpql="SELECT P.precio FROM Producto AS P WHERE P.nombre=:nombre";
-		return em.createQuery(jpql,BigDecimal.class).setParameter("nombre", nombre).getSingleResult();
-	}
+	public BigDecimal valorTotalVendido() {
+		String jpql = "SELECT SUM(p.valorTotal) FROM Pedido p";
+		return em.createQuery(jpql, BigDecimal.class).getSingleResult();
 
 }

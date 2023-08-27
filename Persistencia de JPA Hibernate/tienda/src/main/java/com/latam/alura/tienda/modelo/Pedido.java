@@ -42,6 +42,7 @@ public class Pedido {
 	public void agregarItems(ItemsPedidos item) {
 		item.setPedido(this); 
 		this.items.add(item);
+		this.valorTotal = this.valorTotal.add(item.getValor());
 	}
 	
 	public Long getId() {
